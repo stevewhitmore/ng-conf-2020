@@ -1,13 +1,17 @@
 # Angular for Architects: Data Patterns
 
+*These are supplementary notes I took during the workshop. See slides for more details.*
+
 ## Resources
 
 - Workshop setup: https://jpapa.me/aaseries
 - Slides: https://jpapa.me/afa-1
 - Demo projects: https://github.com/DanWahlin/angular-architecture
 - Labs: https://labs.codewithdan.com/angular-architecture-workshop
+- Dummy API: https://swapi.co/
 - Typescript to JS preview: https://www.typescriptlang.org/play/index.html
 - Instantly create interface from JSON data (there's also a VSCode extension for this): https://www.jsontots.com
+- RxJS diagrams: https://gist.github.com/PCreations/99765f48b1f60c9427c479c25f3e3bbd
 
 They're opening up the resources for Day 2 and 3 for those of us who only signed up for Day 1.
 
@@ -46,7 +50,7 @@ getCustomers(): Observable<Customer[]> {
 
 ### Working with Enums
 
-They generate a fair amount of code. It's not a JS thing so it needs to be transpiled to something that works in the browser. Better to try and use them though instead of strings because strings are too arbitrary. 
+They generate a fair amount of code. It's not a JS thing so it needs to be supplimentary
 
 const enum is great for simple comparisons between string and numbers, etc.
 
@@ -85,3 +89,51 @@ ViewModels do add to the bundle size but it's negligible.
 Models should be single responsibility: customers, orders, line items, products, etc)
 ViewModels combine the models to create the shape the views need them to be.
 
+## HttpClient and RxJS Operators
+
+### switchMap
+
+switchMap can be used for instant results/autocomplete as the user types
+
+```typescript
+searchCharacters(){
+  this.searchCharacters = this.formGroup.get('characterName').valueChanges.pipe(
+    debounceTime(500),
+    switchMap(name => {
+      return this.dataServie.getCharacter(name);
+    });
+  );
+}
+```
+valueChanges is outer obs
+debounceTime waits 500 ms to capture user input
+switch to inner obs (will unsubscribe from previos inner obs if new data is received from the outer obs)
+
+switchMap will toss away old observable and subscribe to new one
+
+### concatMap and mergeMap
+
+Good if we absolutely need order to be maintained. Otherwise this could become a peformance nightmare. Better to use mergeMap and order after the fact
+
+> Anything subscribed to by Angular will automatically be unsubscribed to at teardown (like the pipe operator w/async)
+
+## RxJS Subjects
+
+### Event Bus - Loosely Coupled Communication (Mediator Pattern)
+
+This should be used sparingly. We have a much harder time tracking who triggered the event.
+Good for generic events where it doesn't matter wheState Patterns
+They recommend to go with Observable Service instead
+
+*Look into splitting out observable fns and http calls in services and making a dedicated Observable service*
+*this would be better than many inputs/outputs several component layers deep*
+
+Make Subjects private and Observables public to control event emission. Only the service itself should have access to the Subject.
+
+*Revisit SubSink for our subscription-heavy components. It basically adds all your subscriptions to an array and then loops through them and unsubscribes at teardown*
+
+Dont use takeUntil
+
+## State Patterns
+
+About 95% of data comes from entity state
