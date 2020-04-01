@@ -309,5 +309,3 @@ openUploadModal$ = this.actions$.pipe(
 - Common set of basic state derivations
 
 Pretty much makes a dictionary out of an array. Makes O(n) matching to O(1).
-
-
