@@ -1,4 +1,4 @@
-# Day 1 notes
+# Day 1 Notes
 
 *These are my preliminary notes. A lot of cleanup to come as I review sessions and slides over the next few days*
 
@@ -22,7 +22,6 @@ Ivy's big goals were:
 Able to save ~30% generated code for each component. 
 
 Total bundle size saving is the most for small and large apps. Not a huge difference for medium size app (in most cases).
-
 
 ### Faster builds
 
@@ -133,14 +132,16 @@ take the input observable and pipe onto it, do your thing, then return result
 
 this.route.naviate([authFailRoute]) navigate away if auth fails
 
-if no error return EMPTY. 
+if no error return EMPTY.
 
 HttpBackend is the last interceptor no matter what. XHR call is done with it.
 
 ## How Ivy will improve your application architecture
 
-- Easier lazy loading
-- Partial hydration
+- Easier lazy loading -> partial hydration
+- Dynamic and higher order components -> framework extensions
+- standalone components -> structure with barrels and libs
+- lots of improvements to web components
 
 ## Deep dive into CLI Builders
 
@@ -160,7 +161,7 @@ WAI-ARIA (Web Accessibility Iniative - Accessible Rich Internet Applications)
 
 Talking about interaction patterns and how they're defined for ARIA, screen readers, and other accessilibity tools
 
-`role=""` directive is for ARIA. There are around 70 of them.
+`role=""` directive is for ARIA. There are around 70 of them, half of which are relevant to UI development.
 
 Some are really straight forward while others less so.
 
@@ -175,7 +176,33 @@ We should really know the following:
 
 Making the styling of your component easy to override can be done with parameterized Sass mixins.
 
+```scss
+@mixin swiffer-picker($config) {
+  height: map-get($config, size);
+  width: map-get($config, size);
+  background-color:
+    map-get(
+        $config,
+        primary-color);
+}
+...
+@include swiffer-picker((
+  size: 25px,
+  primary-color: red,
+))
 
+```
+
+**Design composable parts -**
+autocomplete = input + options panel
+
+menu = trigger button + options panel
+
+datepicker = input + trigger button + calendar panel
+
+- Decompose and be deliberate with re-composition
+- Customization is inevitable, so build for flexibility
+- All design choices have trade-offs
 
 ## Angular Universal & Our New Prerenderer
 
@@ -188,20 +215,27 @@ Prerendering good for SEO and for those who need to be able to save static pages
 
 ### First order vs HIgher order mapping
 
-First order mapping transforms each emiitted value and emits a result
+First order mapping transforms each emiitted value and emits the result
 
-`map()`
+`map(x => x * 2);`
 
-hi9gher order mapping transforms each emiiteed value into an obvservable
+Higher order mapping transforms each emiiteed value into an obvservable
 
 `switchMap(id => this.http.get(...));`
 
-```
-map(p => { ...p, profite: p.price -p.cose }) as Product
+Using `map()` can transform an input into something more useful by adding dynamic properties -
+
+```typescript
+product$ = this.http.get<Product>(this.url)
+      .pipe(
+        map(p => ({  ...p,
+                     profit: p.price - p.cost}) as Product),
+        catchError(this.handleError)
+      );
+
 ```
 
 > You need to subscribe to an observable or the stream just doesn't go. This is true with http requests.
-
 
 #### Higher-order mapping operators
 
