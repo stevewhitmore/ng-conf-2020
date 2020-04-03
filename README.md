@@ -4,6 +4,6 @@
 
 [General notes from Day 2](Day-2.md)
 
-[Q&A that seemed most relevant to uses](QandA.md)
+[Relevant Q&A](QandA.md)
 
-[Questions and answers from the Kahoots quizzes](Quizzes.md)
+[Relevant Kahoots quiz questions and answers](Quizzes.md)
