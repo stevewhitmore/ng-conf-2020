@@ -4,14 +4,14 @@
 
 ## Resources
 
-- Workshop setup: https://jpapa.me/aaseries
-- Slides: https://jpapa.me/afa-1
-- Demo projects: https://github.com/DanWahlin/angular-architecture
-- Labs: https://labs.codewithdan.com/angular-architecture-workshop
-- Dummy API: https://swapi.co/
-- Typescript to JS preview: https://www.typescriptlang.org/play/index.html
-- Instantly create interface from JSON data (there's also a VSCode extension for this): https://www.jsontots.com
-- RxJS diagrams: https://gist.github.com/PCreations/99765f48b1f60c9427c479c25f3e3bbd
+- Workshop setup: <https://jpapa.me/aaseries>
+- Slides: <https://jpapa.me/afa-1>
+- Demo projects: <https://github.com/DanWahlin/angular-architecture>
+- Labs: <https://labs.codewithdan.com/angular-architecture-workshop>
+- Dummy API: <https://swapi.co/>
+- Typescript to JS preview: <https://www.typescriptlang.org/play/index.html>
+- Instantly create interface from JSON data (there's also a VSCode extension for this): <https://www.jsontots.com>
+- RxJS diagrams: <https://gist.github.com/PCreations/99765f48b1f60c9427c479c25f3e3bbd>
 
 They're opening up the resources for Day 2 and 3 for those of us who only signed up for Day 1.
 
@@ -105,6 +105,7 @@ searchCharacters(){
   );
 }
 ```
+
 valueChanges is outer obs
 debounceTime waits 500 ms to capture user input
 switch to inner obs (will unsubscribe from previos inner obs if new data is received from the outer obs)
@@ -132,7 +133,7 @@ Make Subjects private and Observables public to control event emission. Only the
 
 *Revisit SubSink for our subscription-heavy components. It basically adds all your subscriptions to an array and then loops through them and unsubscribes at teardown*
 
-Dont use takeUntil
+Dont use takeUntil - more info on that: <https://blog.angularindepth.com/rxjs-avoiding-takeuntil-leaks-fb5182d047ef>
 
 ## State Patterns
 

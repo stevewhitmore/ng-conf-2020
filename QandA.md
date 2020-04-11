@@ -75,3 +75,27 @@ If not in prod mode it's available ot use
 Types somethign compile time
 
 Classe sgo wit hsomething ############### rewatch
+
+**When is it better to use the control container vs passing the parents FormGroup into the component as an input.**
+
+She prefers control containers. Cuts down on all the inputs and outputs when it's a layered form/wizard
+
+**how many nesting levels does control container support? for example, FormGroup supports only 2-level nesting**
+
+She doesn't know but will be writing a blog post about it soon
+
+**Where is the best practice to store access & refresh tokens? In memory like state? localStorage? cookie?**
+Refresh tokensshould neve rbe in the browser. They're long lasting. Localstorage is vunerable to cris site scirpting attacks. Store access tokens in memory
+
+**if you already have NgRx, would it still make sense to use the observable store in conjunction? If so, how would you decide when to use observable store over NgRx?**
+
+No need to change if it's working. If it's causing issues try a prototype of Observable Store. Dont mix and match, be consistent.
+
+**of the three options you outlined for gaining access to the ControlContainer, do you have a preference? Are there any caveats to consider when deciding between the three?**
+
+Each is situational. Review Jennifer Wadella's slides the slides for clarifications.
+
+**how do you handle auth expiry and refresh tokens using ngrx and http calls, any good advice here?**
+
+ID provider has check session hting so dont use refresh token for SPA. AuthO community forum has a lot of good resources for these kinds of questions.
+
